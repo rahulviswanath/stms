@@ -1,0 +1,11 @@
+/*for removing left border from print*/
+.content-wrapper {
+border-left: none ! important;
+}
+.box {
+    border-top: none ! important;
+}
+
+.table > tbody > tr > td {
+     vertical-align: middle;
+}
