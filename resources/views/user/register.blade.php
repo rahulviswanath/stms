@@ -89,6 +89,8 @@
                                                     <option value="0" {{ old('role') == 'superadmin' ? 'selected' : '' }}>Super Admin</option>
                                                     <option value="1" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                                                     <option value="2" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                                                    <option value="3" {{ old('role') == 'teacher' ? 'selected' : '' }}>Teacher</option>
+                                                    <option value="4" {{ old('role') == 'student' ? 'selected' : '' }}>Student</option>
                                                 </select>
                                                 @if(!empty($errors->first('role')))
                                                     <p style="color: red;" >{{$errors->first('role')}}</p>

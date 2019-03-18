@@ -66,6 +66,14 @@ Route::group(['middleware' => 'auth.check'], function () {
         Route::post('/teacher/edit/action', 'TeacherController@editTeacherAction')->name('teacher-edit-action');
         Route::post('/teacher/delete/{id}', 'TeacherController@deleteTeacher')->name('teacher-delete');
 
+        //student
+        Route::get('/student/register', 'StudentController@register')->name('student-register');
+        Route::post('/student/register/action', 'StudentController@registerAction')->name('student-register-action');
+        Route::get('/student/list', 'StudentController@studentList')->name('student-list');
+        Route::get('/student/edit/{id}', 'StudentController@editStudent')->name('student-edit');
+        Route::post('/student/edit/action', 'StudentController@editStudentAction')->name('student-edit-action');
+        Route::post('/student/delete/{id}', 'StudentController@deleteStudent')->name('student-delete');
+
         //class
         Route::get('/classroom/register', 'ClassRoomController@register')->name('class-room-register');
         Route::post('/classroom/register/action', 'ClassRoomController@registerAction')->name('class-room-register-action');

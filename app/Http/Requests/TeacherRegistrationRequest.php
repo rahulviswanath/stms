@@ -59,6 +59,9 @@ class TeacherRegistrationRequest extends FormRequest
                                                 'integer',
                                                 Rule::in([1, 2, 3, 4, 5, 6, 7, 8]),
                                             ],
+            'user_name'             => 'required|unique:users|max:145',
+            'password'              => 'required|min:6|max:25|confirmed',
+            'email'                 => 'nullable|email|unique:users|max:145',
         ];
     }
 }

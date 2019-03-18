@@ -13,12 +13,28 @@
         </div>
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
+            @if($currentUser->role ==3 )    
+            <li class="treeview {{ Request::is('timetable/teacher')? 'active' : '' }}">
+                <a href="{{ route('timetable-teacher',['teacher_id'=>$currentUser->getTeacher()->id]) }}">
+                    <i class="fa fa-calendar"></i> Timetable
+                </a>
+            </li>
+            @endif
+            @if($currentUser->role == 4)    
+            <li class="treeview {{ Request::is('timetable/student')? 'active' : '' }}">
+                <a href="{{ route('timetable-student',['class_room_id'=>$currentUser->getStudent()->getClassRoom()->id]) }}">
+                    <i class="fa fa-calendar"></i> Timetable
+                </a>
+            </li>
+            @endif
+            @if($currentUser->role == 0 || $currentUser->role == 1)    
             <li class="treeview {{ Request::is('dashboard')? 'active' : '' }}">
                 <a href="{{ route('dashboard') }}">
                     <i class="fa fa-dashboard"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
+            @endif
             @if($currentUser->role == 0)
                 <li class="treeview {{ Request::is('user/*')? 'active' : '' }}">
                     <a href="#">
@@ -133,6 +149,27 @@
                         </li>
                         <li class="{{ Request::is('teacher/list')? 'active' : '' }}">
                             <a href="{{ route('teacher-list') }}">
+                                <i class="fa fa-circle-o"></i> List
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview {{ Request::is('student/*')? 'active' : '' }}">
+                    <a href="#">
+                        <i class="fa fa-user-md"></i>
+                        <span>Student</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ Request::is('student/register')? 'active' : '' }}">
+                            <a href="{{ route('student-register') }}">
+                                <i class="fa fa-circle-o"></i> Registration
+                            </a>
+                        </li>
+                        <li class="{{ Request::is('student/list')? 'active' : '' }}">
+                            <a href="{{ route('student-list') }}">
                                 <i class="fa fa-circle-o"></i> List
                             </a>
                         </li>

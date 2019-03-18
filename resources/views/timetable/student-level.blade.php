@@ -22,6 +22,7 @@
                 </h4>
             </div>
         @endif
+        @if ($currentUser->role != 4)
         <!-- Main row -->
         <div class="row  no-print">
             <div class="col-md-12">
@@ -66,6 +67,7 @@
                 </div>
             </div>
         </div>
+        @endif
         @if(empty($noOfSession) || $noOfSession == 0)
             <div class="alert alert-danger">
                 <h4>&emsp;&emsp;Settings changed! Current timetable is invalid.&emsp;Please regenerate timetable with new settings.</h4>

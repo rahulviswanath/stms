@@ -45,7 +45,7 @@ class TeacherUpdationRequest extends FormRequest
             'teacher_name'              => [
                                                 'required',
                                                 'max:50',
-                                                Rule::unique('teachers')->ignore($this->teacher_id),
+                                                
                                             ],
             'category_id'               => [
                                                 'required',

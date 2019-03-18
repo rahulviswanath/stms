@@ -39,4 +39,9 @@ class ClassRoom extends Model
     {
         return $this->belongsTo('App\Models\Teacher');
     }
+
+    //Get class room name
+    public function getName(){
+        return $this->standard->standard_name.' - '.$this->division->division_name;
+    }
 }

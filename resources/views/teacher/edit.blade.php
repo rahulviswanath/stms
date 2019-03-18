@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Update Taecher Info')
+@section('title', 'Update Teacher Info')
 @section('content')
 <div class="content-wrapper">
      <section class="content-header">

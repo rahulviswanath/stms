@@ -79,6 +79,10 @@ class LoginController extends Controller
                 return redirect(route('user-expired'))->with("expired-user", $user->user_name);
             } else if(!empty($user->valid_till) && (($userValidDate - $today) <= 172800)){
                 return redirect(route('user-dashboard'))->with("message",("Welcome " . $user->name . ". Your trial pack ends on " . $user->valid_till . ". Please contact developer team for more info."))->with("alert-class","alert-warning");
+            }else if($user->role == 3){
+                return redirect(route('timetable-teacher',['teacher_id'=>$user->getTeacher()->id]));
+            }else if($user->role == 4){
+                return redirect(route('timetable-student',['class_room_id'=>$user->getStudent()->getClassRoom()->id]));
             }
             return redirect(route('dashboard'))->with("message","Welcome " . $user->name . ". You are successfully logged in to the School Timetable Managemet System.")->with("alert-class","alert-success");
         } else {

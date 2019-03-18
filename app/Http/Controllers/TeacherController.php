@@ -7,6 +7,8 @@ use App\Models\Teacher;
 use App\Models\Settings;
 use App\Http\Requests\TeacherRegistrationRequest;
 use App\Http\Requests\TeacherUpdationRequest;
+use App\Models\User;
+use Hash;
 
 class TeacherController extends Controller
 {
@@ -23,11 +25,17 @@ class TeacherController extends Controller
      */
     public function registerAction(TeacherRegistrationRequest $request)
     {
+        \DB::beginTransaction();
+
         $name               = $request->get('teacher_name');
         $categoryId         = $request->get('category_id');
         $description        = $request->get('description');
         $noOfSessionPerWeek = $request->get('no_of_session_per_week');
         $teacherLevel       = $request->get('teacher_level');
+
+        $userName           = $request->get('user_name');
+        $password           = $request->get('password');
+        $email           = $request->get('email');
 
         $teacher = new Teacher;
         $teacher->teacher_name              = $name;
@@ -37,14 +45,28 @@ class TeacherController extends Controller
         $teacher->teacher_level             = $teacherLevel;
         $teacher->status        = 1;
         if($teacher->save()) {
+
+            //create user for teacher
+            $user = new User;
+            $user->name         = $name;
+            $user->user_name    = $userName;
+            $user->email        = $email;
+            /*$user->phone        = $phone;*/
+            $user->password     = Hash::make($password);
+            $user->role         = 3;
+            $user->status       = 1;
+            if($user->save()){
+                $teacher->update(['user_id' => $user->id]);
+            }
             //invalidating the current timetable if major change is made
             $settingsFlag = Settings::where('status', 1)->first();
             if(!empty($settingsFlag) && !empty($settingsFlag->id)) {
                 $settingsFlag->update(['time_table_status' => 0]);
             }
-            
+            \DB::commit();
             return redirect()->back()->with("message","Saved successfully")->with("alert-class","alert-success");
         } else {
+            \DB::rollBack();
             return redirect()->back()->withInput()->with("message","Failed to save the teacher details. Try again after reloading the page!")->with("alert-class","alert-danger");
         }
     }
@@ -129,6 +151,7 @@ class TeacherController extends Controller
             $teacher->teacher_name  = $teacher->teacher_name."_deleted";
             $teacher->status        = 0;
             if($teacher->save()) {
+                User::where('id', $teacher->user_id)->delete();
                 //invalidating the current timetable if major change is made
                 $settingsFlag = Settings::where('status', 1)->first();
                 if(!empty($settingsFlag) && !empty($settingsFlag->id)) {
@@ -141,4 +164,5 @@ class TeacherController extends Controller
 
         return redirect()->back()->with("message", "Failed to delete the teacher record. Try again after reloading the page!")->with("alert-class","alert-danger");
     }
+
 }

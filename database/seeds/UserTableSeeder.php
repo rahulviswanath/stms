@@ -13,10 +13,10 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name'      => 'abin_12914',
+                'name'      => 'superadmin',
                 'user_name' => 'superadmin',
-                'email'     => 'abin111abin@gmail.com',
-                'phone'     => '+918714439950',
+                'email'     => 'admin@test.com',
+                'phone'     => '',
                 'password'  => Hash::make('123456'),
                 'role'      => '0',
                 'status'    => '1'
@@ -24,7 +24,7 @@ class UserTableSeeder extends Seeder
             [
                 'name'      => 'Principal',
                 'user_name' => 'admin',
-                'email'     => 'admin@gmail.com',
+                'email'     => 'admin@test.com',
                 'phone'     => '+910000000000',
                 'password'  => Hash::make('123456'),
                 'role'      => '1',
@@ -33,7 +33,7 @@ class UserTableSeeder extends Seeder
             [
                 'name'      => 'Employee',
                 'user_name' => 'employee',
-                'email'     => 'employee@gmail.com',
+                'email'     => 'employee@test.com',
                 'phone'     => '+911000000000',
                 'password'  => Hash::make('123456'),
                 'role'      => '2',

@@ -15,6 +15,7 @@ use App\Models\SessionTime;
 
 class TimetableController extends Controller
 {
+
     /**
      * Return view for teacher level timetable
      */
@@ -31,6 +32,7 @@ class TimetableController extends Controller
         $timetable      = Timetable::where('status', 1)->whereHas('combination', function ($qry) use($teacherId) {
                                 $qry->where('teacher_id', $teacherId);
                             })->with(['combination.classRoom.standard', 'combination.classRoom.division', 'combination.subject'])->get();
+                         
 
         if(!empty($teacherId)) {
             $selectedTeacher  = Teacher::find($teacherId);

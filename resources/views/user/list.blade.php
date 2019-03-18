@@ -26,7 +26,7 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">QuarryManager Users</h3>
+                        <h3 class="box-title"> Users</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -47,7 +47,7 @@
                                                 <tr class="{{ $user->role == 'admin' ? 'bg-success' : ($user->role == 'user' ? 'bg-info' : 'bg-warning') }}">
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->user_name }}</td>
-                                                    <td>{{ $user->role == 0 ? "Super Admin" : ($user->role == 1 ? "Admin" : "User") }}</td>
+                                                    <td>{{ $user->role == 0 ? "Super Admin" : ($user->role == 1 ? "Admin" : ($user->role == 3 ? "Teacher" : ($user->role == 4 ? "Student" : "User"))) }}</td>
                                                     @if(!empty($user->valid_till))
                                                         <td>{{ $user->valid_till }}</td>
                                                     @else

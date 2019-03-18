@@ -66,14 +66,14 @@
                                                 <a class="pull-right">{{ !empty($currentUser->valid_till) ? $currentUser->valid_till : 'Unlimited' }}</a>
                                             </li>
                                         </ul><br>
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-3  no-print">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4  no-print">
                                             <a href="{{ route('logout-action') }}" class="btn btn-primary btn-block"><b>LogOut</b></a>
                                         </div>
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-3  no-print">
+                                        <div class="col-md-4"></div>
+                                        <!-- <div class="col-md-3  no-print">
                                             <a href="{{ route('profile-edit') }}" class="btn btn-primary btn-block"><b>Edit Profile</b></a>
-                                        </div>
+                                        </div> -->
                                         <div class="clearfix"></div><br>
                                     </div>
                                 </div>
