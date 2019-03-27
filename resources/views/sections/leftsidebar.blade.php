@@ -36,7 +36,7 @@
             </li>
             @endif
             @if($currentUser->role == 0)
-                <li class="treeview {{ Request::is('user/*')? 'active' : '' }}">
+                <!-- <li class="treeview {{ Request::is('user/*')? 'active' : '' }}">
                     <a href="#">
                         <i class="fa fa-user"></i>
                         <span>Users</span>
@@ -57,7 +57,7 @@
                         </li>   
                     </ul>
                 </li>
-            </li>
+            </li> -->
             @endif
             @if($currentUser->role == 0 || $currentUser->role == 1)
                 <li class="treeview {{ Request::is('timetable/*')? 'active' : '' }}">
@@ -86,7 +86,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="treeview {{ Request::is('substitution/*')? 'active' : '' }}">
+                <!-- <li class="treeview {{ Request::is('substitution/*')? 'active' : '' }}">
                     <a href="#">
                         <i class="fa fa-recycle"></i>
                         <span>Substitution System</span>
@@ -111,7 +111,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="treeview {{ Request::is('subject/*')? 'active' : '' }}">
                     <a href="#">
                         <i class="fa fa-book"></i>
