@@ -39,11 +39,10 @@ class SettingsController extends Controller
 
         foreach ($timeSessions as $key => $timeSession) {
             $sessionTimes [$timeSession->session_index] = [
-                "fromTime"  => DateTime::createFromFormat('H:i:s', $timeSession->from_time)->format('H:i A'),
-                "toTime"    => DateTime::createFromFormat('H:i:s', $timeSession->to_time)->format('H:i A'),
+                "fromTime"  => DateTime::createFromFormat('H:i:s', $timeSession->from_time)->format('h:i A'),
+                "toTime"    => DateTime::createFromFormat('H:i:s', $timeSession->to_time)->format('h:i A'),
             ];
         }
-
         return view('timetable.settings', [
                 'noOfDays'          => $noOfDays,
                 'noOfSession'       => $noOfSession,

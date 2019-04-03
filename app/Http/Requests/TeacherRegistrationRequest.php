@@ -43,22 +43,22 @@ class TeacherRegistrationRequest extends FormRequest
     {
         return [
             'teacher_name'              => 'required|max:50|unique:teachers',
-            'category_id'               => [
-                                                'required',
-                                                'integer',
-                                                Rule::in([1, 2, 3, 4, 5, 6, 7, 8, 9]),
-                                            ],
+            // 'category_id'               => [
+            //                                     'required',
+            //                                     'integer',
+            //                                     Rule::in([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+            //                                 ],
             'description'               => 'nullable|max:200',
             'no_of_session_per_week'    => [
                                                 'required',
                                                 'integer',
                                                 'max:99'
                                             ],
-            'teacher_level'                => [
-                                                'required',
-                                                'integer',
-                                                Rule::in([1, 2, 3, 4, 5, 6, 7, 8]),
-                                            ],
+            // 'teacher_level'                => [
+            //                                     'required',
+            //                                     'integer',
+            //                                     Rule::in([1, 2, 3, 4, 5, 6, 7, 8]),
+            //                                 ],
             'user_name'             => 'required|unique:users|max:145',
             'password'              => 'required|min:6|max:25|confirmed',
             'email'                 => 'nullable|email|unique:users|max:145',

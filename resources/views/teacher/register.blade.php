@@ -47,7 +47,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-sm-2 control-label"><b style="color: red;">* </b>Teaching Category : </label>
                                         <div class="col-sm-10 {{ !empty($errors->first('category_id')) ? 'has-error' : '' }}">
                                             <select class="form-control select_2" name="category_id" id="category_id" tabindex="2" style="width: 100%;">
@@ -61,7 +61,7 @@
                                                 <p style="color: red;" >{{$errors->first('category_id')}}</p>
                                             @endif
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label for="description" class="col-sm-2 control-label">Description : </label>
                                         <div class="col-sm-10 {{ !empty($errors->first('description')) ? 'has-error' : '' }}">
@@ -84,7 +84,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-sm-2 control-label"><b style="color: red;">* </b>Teaching Level   : </label>
                                         <div class="col-sm-10 {{ !empty($errors->first('teacher_level')) ? 'has-error' : '' }}">
                                             <select class="form-control select_2" name="teacher_level" id="teacher_level" tabindex="6">
@@ -100,7 +100,7 @@
                                                 <p style="color: red;" >{{$errors->first('teacher_level')}}</p>
                                             @endif
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <br/>
                                     <div class="form-group">
                                         <label for="user_name" class="col-sm-2 control-label"><b style="color: red;">* </b> User Name : </label>

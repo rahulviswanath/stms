@@ -38,10 +38,10 @@
                                         <tr>
                                             <th style="width: 2%;">#</th>
                                             <th style="width: 20%;">Name</th>
-                                            <th style="width: 16%;">Category</th>
+                                            <!-- <th style="width: 16%;">Category</th> -->
                                             <th style="width: 18%;">Description</th>
                                             <th style="width: 10%;">No of session per week</th>
-                                            <th style="width: 20%;">Teaching Level</th>
+                                            <!-- <th style="width: 20%;">Teaching Level</th> -->
                                             <th style="width: 7%;"></th>
                                             <th style="width: 7%;"></th>
                                         </tr>
@@ -52,7 +52,7 @@
                                                 <tr>
                                                     <td>{{ $index + $teachers->firstItem() }}</td>
                                                     <td>{{ $teacher->teacher_name }}</td>
-                                                    @if($teacher->category_id == 1)
+                                                    <!-- @if($teacher->category_id == 1)
                                                         <td>Language</td>
                                                     @elseif($teacher->category_id == 2)
                                                         <td>Science</td>
@@ -62,10 +62,10 @@
                                                         <td>Moral</td>
                                                     @else
                                                         <td>Error! Invalid</td>
-                                                    @endif
+                                                    @endif -->
                                                     <td>{{ !empty($teacher->description) ? $teacher->description : "Nil" }}</td>
                                                     <td>{{ $teacher->no_of_session_per_week }}</td>
-                                                    @if($teacher->teacher_level == 1)
+                                                    <!-- @if($teacher->teacher_level == 1)
                                                         <td>Pre Primary</td>
                                                     @elseif($teacher->teacher_level == 2)
                                                         <td>Lower Primary</td>
@@ -79,7 +79,7 @@
                                                         <td>All</td>
                                                     @else
                                                         <td><b>Error! Invalid</b></td>
-                                                    @endif
+                                                    @endif -->
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <form action="{{ route('teacher-edit', ['teacher_id' => $teacher->id]) }}" method="get">

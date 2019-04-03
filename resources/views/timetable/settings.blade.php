@@ -130,6 +130,7 @@
                                             <tbody>
                                             @if(!empty($noOfSession))
                                                 @for($i=1; $i <= $noOfSession; $i++)
+                                                
                                                     <tr>
                                                         <td class="text-center">
                                                             <b>{{ $i }}</b>
@@ -137,7 +138,7 @@
                                                         <td>
                                                             <div class="col-sm-12 {{ (!empty($errors->first('from_time.'.$i)) || !empty($errors->first('time_error.'.$i))) ? 'has-error' : '' }}">
                                                                 <div class="bootstrap-timepicker">
-                                                                    <input type="text" class="form-control text-center timepicker" name="from_time[{{ $i }}]" id="from_time_{{ $i }}" placeholder="Time" value="{{ !empty(old('from_time.'.$i)) ? old('from_time.'.$i) : (!empty($sessionTimes[$i]['fromTime']) ? $sessionTimes[$i]['fromTime'] : "" ) }}">
+                                                                    <input type="text" class="form-control text-center timepicker" name="from_time[{{ $i }}]" id="from_time_{{ $i }}" placeholder="Time" value="{{ !empty(old('from_time.'.$i)) ? old('from_time.'.$i) : (!empty($sessionTimes[$i]['fromTime']) ? $sessionTimes[$i]['fromTime'] : '' ) }}">
                                                                 </div>
                                                                 @if(!empty($errors->first('from_time.'.$i)))
                                                                     <p style="color: red;" >{{$errors->first('from_time.'. $i)}}</p>
@@ -150,7 +151,7 @@
                                                         <td>
                                                             <div class="col-sm-12 {{ (!empty($errors->first('to_time.'.$i)) || !empty($errors->first('time_error.'.$i))) ? 'has-error' : '' }}">
                                                                 <div class="bootstrap-timepicker">
-                                                                    <input type="text" class="form-control text-center timepicker" name="to_time[{{ $i }}]" id="to_time_{{ $i }}" placeholder="Time" value="{{ !empty(old('to_time.'.$i)) ? old('to_time.'.$i) : (!empty($sessionTimes[$i]['toTime']) ? $sessionTimes[$i]['toTime'] : "" ) }}">
+                                                                    <input type="text" class="form-control text-center timepicker" name="to_time[{{ $i }}]" id="to_time_{{ $i }}" placeholder="Time" value="{{ !empty(old('to_time.'.$i)) ? old('to_time.'.$i) : (!empty($sessionTimes[$i]['toTime']) ? $sessionTimes[$i]['toTime'] : '' ) }}">
                                                                 </div>
                                                                 @if(!empty($errors->first('to_time.'.$i)))
                                                                     <p style="color: red;" >{{$errors->first('to_time.'.$i)}}</p>

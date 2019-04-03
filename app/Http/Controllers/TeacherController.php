@@ -8,6 +8,9 @@ use App\Models\Settings;
 use App\Http\Requests\TeacherRegistrationRequest;
 use App\Http\Requests\TeacherUpdationRequest;
 use App\Models\User;
+use App\Models\ClassRoom;
+use App\Models\Combination;
+
 use Hash;
 
 class TeacherController extends Controller
@@ -28,7 +31,7 @@ class TeacherController extends Controller
         \DB::beginTransaction();
 
         $name               = $request->get('teacher_name');
-        $categoryId         = $request->get('category_id');
+        // $categoryId         = $request->get('category_id');
         $description        = $request->get('description');
         $noOfSessionPerWeek = $request->get('no_of_session_per_week');
         $teacherLevel       = $request->get('teacher_level');
@@ -39,7 +42,7 @@ class TeacherController extends Controller
 
         $teacher = new Teacher;
         $teacher->teacher_name              = $name;
-        $teacher->category_id               = $categoryId;
+        // $teacher->category_id               = $categoryId;
         $teacher->description               = $description;
         $teacher->no_of_session_per_week    = $noOfSessionPerWeek;
         $teacher->teacher_level             = $teacherLevel;
@@ -109,7 +112,7 @@ class TeacherController extends Controller
     {
         $teacherId          = $request->get('teacher_id');
         $name               = $request->get('teacher_name');
-        $categoryId         = $request->get('category_id');
+        // $categoryId         = $request->get('category_id');
         $description        = $request->get('description');
         $noOfSessionPerWeek = $request->get('no_of_session_per_week');
         $teacherLevel       = $request->get('teacher_level');
@@ -120,7 +123,7 @@ class TeacherController extends Controller
             $oldNoofSessionPerWeek = $teacher->no_of_session_per_week;
 
             $teacher->teacher_name              = $name;
-            $teacher->category_id               = $categoryId;
+            // $teacher->category_id               = $categoryId;
             $teacher->description               = $description;
             $teacher->no_of_session_per_week    = $noOfSessionPerWeek;
             $teacher->teacher_level             = $teacherLevel;
@@ -146,23 +149,28 @@ class TeacherController extends Controller
     public function deleteTeacher($teacherId)
     {
         $teacher = Teacher::where('status', 1)->where('id', $teacherId)->first();
-        
-        if(!empty($teacher) && !empty($teacher->id)) {
-            $teacher->teacher_name  = $teacher->teacher_name."_deleted";
-            $teacher->status        = 0;
-            if($teacher->save()) {
-                User::where('id', $teacher->user_id)->delete();
-                //invalidating the current timetable if major change is made
-                $settingsFlag = Settings::where('status', 1)->first();
-                if(!empty($settingsFlag) && !empty($settingsFlag->id)) {
-                    $settingsFlag->update(['time_table_status' => 0]);
+        $classIncharge = ClassRoom::where('incharge_id', $teacherId)->count();
+        $subjectTutor = Combination::where('teacher_id', $teacherId)->count();
+
+        if($classIncharge > 0 || $subjectTutor>0){
+            return redirect()->back()->with("message", "Failed to delete the teacher record. Please remove teacher from class charges.")->with("alert-class","alert-danger");
+        }else{
+            if(!empty($teacher) && !empty($teacher->id)) {
+                $teacher->teacher_name  = $teacher->teacher_name."_deleted";
+                $teacher->status        = 0;
+                if($teacher->save()) {
+                    User::where('id', $teacher->user_id)->delete();
+                    //invalidating the current timetable if major change is made
+                    $settingsFlag = Settings::where('status', 1)->first();
+                    if(!empty($settingsFlag) && !empty($settingsFlag->id)) {
+                        $settingsFlag->update(['time_table_status' => 0]);
+                    }
+    
+                    return redirect(route('teacher-list'))->with("message", "Selected teacher record deleted successfully. Current timetable invalidated, due to resource change.Current timetable invalidated, due to resource change.")->with("alert-class", "alert-success");
                 }
-
-                return redirect(route('teacher-list'))->with("message", "Selected teacher record deleted successfully. Current timetable invalidated, due to resource change.Current timetable invalidated, due to resource change.")->with("alert-class", "alert-success");
             }
+            return redirect()->back()->with("message", "Failed to delete the teacher record. Try again after reloading the page!")->with("alert-class","alert-danger");
         }
-
-        return redirect()->back()->with("message", "Failed to delete the teacher record. Try again after reloading the page!")->with("alert-class","alert-danger");
     }
 
 }

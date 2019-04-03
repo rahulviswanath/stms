@@ -168,12 +168,16 @@ class TimetableController extends Controller
             $teacherSessionMax[$teacher->id] = $teacher->no_of_session_per_week;
         }
 
+
+        $combinationIds = array_column($combinations->toArray(), 'id');
+        $combinations = array_combine($combinationIds, $combinations->toArray());
+
         //combinations of classes
         foreach ($combinations as $comb) {
-            if(empty($classCombinationsArr[$comb->class_room_id])) {
-                $classCombinationsArr[$comb->class_room_id] = [];
+            if(empty($classCombinationsArr[$comb['class_room_id']])) {
+                $classCombinationsArr[$comb['class_room_id']] = [];
             }
-            array_push($classCombinationsArr[$comb->class_room_id], $comb->id);
+            array_push($classCombinationsArr[$comb['class_room_id']], $comb['id']);
         }
 
         //iterating class rooms for timetable generation
@@ -193,34 +197,35 @@ class TimetableController extends Controller
                     $loopCount  = $loopCount + 1;
 
                     //inserting previous session as current session. considering 2 sessions as 1 for kg classes
-                    if(($classRoom->standard->level <= $doubleSessionLevel) && (($session->session_index % 2) == 0) && (!empty($kgFirstCombination[$classRoom->id]))) {
-                        $timetableArray[] = [
-                                'session_id'        => $session->id,
-                                'combination_id'    => $kgFirstCombination[$classRoom->id],
-                                'status'            => 1
-                            ];
+                    // if(($classRoom->standard->level <= $doubleSessionLevel) && (($session->session_index % 2) == 0) && (!empty($kgFirstCombination[$classRoom->id]))) {
+                    //     $timetableArray[] = [
+                    //             'session_id'        => $session->id,
+                    //             'combination_id'    => $kgFirstCombination[$classRoom->id],
+                    //             'status'            => 1
+                    //         ];
 
-                        //assigning class to teacher and teacher for class
-                        $sessionTeacher[$session->id][$kgFirstTeacher[$classRoom->id]]  = $classRoom->id;
-                        $sessionClassRoom[$session->id][$classRoom->id]                 = $kgFirstTeacher[$classRoom->id];
+                    //     //assigning class to teacher and teacher for class
+                    //     $sessionTeacher[$session->id][$kgFirstTeacher[$classRoom->id]]  = $classRoom->id;
+                    //     $sessionClassRoom[$session->id][$classRoom->id]                 = $kgFirstTeacher[$classRoom->id];
 
-                        $kgFirstCombination[$classRoom->id] = "";
-                        $kgFirstTeacher[$classRoom->id]     = "";
-                    } else {
+                    //     $kgFirstCombination[$classRoom->id] = "";
+                    //     $kgFirstTeacher[$classRoom->id]     = "";
+                    // } else {
                         //selecting a random combination of the current class
+                        
                         $randomCombinationIndex = array_rand($classCombinationsArr[$classRoom->id]);
                         $randomCombinationId    = $classCombinationsArr[$classRoom->id][$randomCombinationIndex];
-                        $combination = $combinations[$randomCombinationId-1];
+                        $combination = (object)$combinations[$randomCombinationId];
 
                         //avioding same combinations consecutively for more than 2 sessions
                         if($combination->id == $prevcombination && $combination->id == $beforeprevcombination) {
                             continue;
                         }
-
+                        
                         //avoiding extra curricular activities for 1 & 2 sessioons of the day
-                        if(($session->session_index == 1 || $session->session_index == 2) && ($combination->subject->category_id > $subjectCategoryLevel)) {
-                            continue;
-                        }
+                        // if(($session->session_index == 1 || $session->session_index == 2) && ($combination->subject->category_id > $subjectCategoryLevel)) {
+                        //     continue;
+                        // }
 
                         $classRoomId    = $combination->class_room_id;
                         $teacherId      = $combination->teacher_id;
@@ -240,7 +245,7 @@ class TimetableController extends Controller
                             }
                             continue;
                         }
-
+                        
                         //if maximum sessions of a subject in a class per week exceeds
                         if($noOfSessionPerWeek[$classRoom->standard->id][$subjectId] < $classRoomSubjectCount[$classRoomId][$subjectId]) {
                             if (($key = array_search($combination->id, $classCombinationsArr[$classRoom->id])) !== false) {
@@ -248,14 +253,18 @@ class TimetableController extends Controller
                             }
                             continue;
                         }
-
+                        
                         //avoid current combination for kg classes if next session is available for class or teacher
-                        if(($classRoom->standard->level <= $doubleSessionLevel && $session->session_index != $noOfSessionPerDay && ($session->session_index % 2) != 0) && (!empty($sessionTeacher[($session->id)+1][$teacher]) || !empty($sessionClassRoom[($session->id)+1][$classRoomId]))) {
-                            continue;
-                        }
+                        // if(($classRoom->standard->level <= $doubleSessionLevel && $session->session_index != $noOfSessionPerDay && ($session->session_index % 2) != 0) && (!empty($sessionTeacher[($session->id)+1][$teacher]) || !empty($sessionClassRoom[($session->id)+1][$classRoomId]))) {
+                        //     continue;
+                        // }
+                        
+                            
                         
                         //cheking for class engagement or teacher engagement
                         if(empty($sessionTeacher[$session->id][$teacherId]) && empty($sessionClassRoom[$session->id][$classRoomId])) {
+
+                            
                             //assigning class to teacher and teacher for class
                             $sessionTeacher[$session->id][$teacherId]       = $classRoomId;
                             $sessionClassRoom[$session->id][$classRoomId]   = $teacherId;
@@ -272,10 +281,10 @@ class TimetableController extends Controller
                                 'status'            => 1
                             ];
                             //considering 2 sessions as 1 for kg classes
-                            if(($classRoom->standard->level <= $doubleSessionLevel) && (($session->session_index % 2) != 0)) {
-                                $kgFirstCombination[$classRoom->id] = $combination->id;
-                                $kgFirstTeacher[$classRoom->id]     = $teacherId;
-                            }
+                            // if(($classRoom->standard->level <= $doubleSessionLevel) && (($session->session_index % 2) != 0)) {
+                            //     $kgFirstCombination[$classRoom->id] = $combination->id;
+                            //     $kgFirstTeacher[$classRoom->id]     = $teacherId;
+                            // }
                             //loop termination
                             $loopFlag   = false;
                             $loopCount  = 0;
@@ -291,7 +300,7 @@ class TimetableController extends Controller
                                 $prevcombination        = 0;
                             }
                         }
-                    }
+                    // }
                 } while($loopFlag && $loopCount <= 100);
 
                 if(empty($sessionClassRoom[$session->id][$classRoom->id])) { /* && !(($classRoom->standard->level < 3) && (($session->id % 2) == 0))) {*/

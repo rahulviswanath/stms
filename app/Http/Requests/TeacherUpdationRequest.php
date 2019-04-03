@@ -24,13 +24,13 @@ class TeacherUpdationRequest extends FormRequest
     public function messages()
     {
         return [
-            'category_id.required'              => "The category field is required.",
-            'category_id.integer'               => "The selected category id is invalid.",
-            'category_id.in'                    => "The selected category id is invalid.",
+            // 'category_id.required'              => "The category field is required.",
+            // 'category_id.integer'               => "The selected category id is invalid.",
+            // 'category_id.in'                    => "The selected category id is invalid.",
             'no_of_session_per_week.required'   => "No of sessions per week is required.",
-            'teacher_level.required'            => "The teaching level field is required.",
-            'teacher_level.integer'             => "The teaching level field value is invalid.",
-            'teacher_level.in'                  => "The teaching level field value is invalid.",
+            // 'teacher_level.required'            => "The teaching level field is required.",
+            // 'teacher_level.integer'             => "The teaching level field value is invalid.",
+            // 'teacher_level.in'                  => "The teaching level field value is invalid.",
         ];
     }
 
@@ -47,22 +47,22 @@ class TeacherUpdationRequest extends FormRequest
                                                 'max:50',
                                                 
                                             ],
-            'category_id'               => [
-                                                'required',
-                                                'integer',
-                                                Rule::in([1, 2, 3, 4, 5, 6, 7, 8, 9]),
-                                            ],
+            // 'category_id'               => [
+            //                                     'required',
+            //                                     'integer',
+            //                                     Rule::in([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+            //                                 ],
             'description'               => 'nullable|max:200',
             'no_of_session_per_week'    => [
                                                 'required',
                                                 'integer',
                                                 'max:99'
                                             ],
-            'teacher_level'                => [
-                                                'required',
-                                                'integer',
-                                                Rule::in([1, 2, 3, 4, 5, 6, 7, 8]),
-                                            ],
+            // 'teacher_level'                => [
+            //                                     'required',
+            //                                     'integer',
+            //                                     Rule::in([1, 2, 3, 4, 5, 6, 7, 8]),
+            //                                 ],
         ];
     }
 }
