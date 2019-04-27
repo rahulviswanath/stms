@@ -37,7 +37,17 @@
                                 <div class="box-body box-profile">
                                     <img class="profile-user-img img-responsive img-circle" src="/images/user/default_user.jpg" alt="User profile picture">
                                     <h3 class="profile-username text-center">{{ $currentUser->name }}</h3>
-                                    <p class="text-muted text-center">{{ $currentUser->role == 2? 'Employee' : 'Admin' }}</p>
+                                    <p class="text-muted text-center">
+                                        @if($currentUser->role == 0)
+                                            {{ 'Admin' }}
+                                        @elseif($currentUser->role == 3)
+                                            {{ 'Teacher' }}
+                                        @elseif($currentUser->role == 4)
+                                            {{ 'Student' }}
+                                        @else
+                                            {{ 'Nil' }}
+                                        @endif
+                                    </p>
                                     <div class="col-md-2"></div>
                                     <div class="col-md-8">
                                         <ul class="list-group list-group-unbordered">
@@ -59,7 +69,17 @@
                                             </li> --}}
                                             <li class="list-group-item">
                                                 <b class="">Role : </b>
-                                                <a class="pull-right">{{ !empty($currentUser->role) ? ($currentUser->role == 2? 'Employee' : 'Admin') : 'Nil' }}</a>
+                                                <a class="pull-right">
+                                                @if($currentUser->role == 0)
+                                                    {{ 'Admin' }}
+                                                @elseif($currentUser->role == 3)
+                                                    {{ 'Teacher' }}
+                                                @elseif($currentUser->role == 4)
+                                                    {{ 'Student' }}
+                                                @else
+                                                    {{ 'Nil' }}
+                                                @endif
+                                                </a>
                                             </li>
                                             <li class="list-group-item">
                                                 <b class="">Valid Till : </b>

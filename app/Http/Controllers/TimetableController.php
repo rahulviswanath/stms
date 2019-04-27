@@ -181,6 +181,7 @@ class TimetableController extends Controller
         }
 
         //iterating class rooms for timetable generation
+        
         foreach ($classRooms as $classRoom) {
             $kgFirstCombination[$classRoom->id] = "";
             $kgFirstTeacher[$classRoom->id]     = "";
@@ -211,16 +212,18 @@ class TimetableController extends Controller
                     //     $kgFirstCombination[$classRoom->id] = "";
                     //     $kgFirstTeacher[$classRoom->id]     = "";
                     // } else {
+                        if(empty($classCombinationsArr[$classRoom->id])){
+                            continue;
+                        }
                         //selecting a random combination of the current class
-                        
                         $randomCombinationIndex = array_rand($classCombinationsArr[$classRoom->id]);
                         $randomCombinationId    = $classCombinationsArr[$classRoom->id][$randomCombinationIndex];
                         $combination = (object)$combinations[$randomCombinationId];
 
                         //avioding same combinations consecutively for more than 2 sessions
-                        if($combination->id == $prevcombination && $combination->id == $beforeprevcombination) {
-                            continue;
-                        }
+                        // if($combination->id == $prevcombination && $combination->id == $beforeprevcombination) {
+                        //     continue;
+                        // }
                         
                         //avoiding extra curricular activities for 1 & 2 sessioons of the day
                         // if(($session->session_index == 1 || $session->session_index == 2) && ($combination->subject->category_id > $subjectCategoryLevel)) {
@@ -246,7 +249,7 @@ class TimetableController extends Controller
                             continue;
                         }
                         
-                        //if maximum sessions of a subject in a class per week exceeds
+                        // if maximum sessions of a subject in a class per week exceeds
                         if($noOfSessionPerWeek[$classRoom->standard->id][$subjectId] < $classRoomSubjectCount[$classRoomId][$subjectId]) {
                             if (($key = array_search($combination->id, $classCombinationsArr[$classRoom->id])) !== false) {
                                 unset($classCombinationsArr[$classRoom->id][$key]);

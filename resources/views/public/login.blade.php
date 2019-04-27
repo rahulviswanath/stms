@@ -19,7 +19,7 @@
     <div class="login-logo">
         <div>
             <b style="color: white;">
-                STMS
+                ATG
             </b>
         </div>
     </div>
@@ -46,7 +46,7 @@
         </form>
         <br>
         Forgot your password? Click<a href="{{ route('under-construction') }}"> here </a>to reset password.<br>
-        <a class="pull-right" href="{{ route('licence') }}">License</a>
+        
     </div>
   <!-- /.login-box-body -->
 </div>

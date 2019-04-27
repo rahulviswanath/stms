@@ -4,7 +4,7 @@
     <!-- Automatic element centering -->
     <div class="lockscreen-wrapper">
         <div class="lockscreen-logo">
-            <b>STMS</b>
+            <b>ATG</b>
         </div>
         <!-- User name -->
         <div class="lockscreen-name">{{ $user->name }}</div>

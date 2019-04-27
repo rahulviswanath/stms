@@ -19,7 +19,7 @@
     <div class="login-logo">
         <div>
             <b>
-                Welcome To </br>School Timetable Management System
+                Welcome To </br>ATG
             </b>
         </div>
     </div>
