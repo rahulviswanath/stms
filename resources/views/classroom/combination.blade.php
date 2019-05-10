@@ -92,7 +92,7 @@
                                         </form>
                                     </div>
                                     <div class="col-xs-3">
-                                        <button type="submit" class="btn btn-primary btn-block btn-flat submit-button">Delete</button>
+                                        <a href="{{ route('class-room-delete', ['class_room_id' => $classRoom->id]) }}" class="btn btn-primary btn-block btn-flat submit-button">Delete</a>
                                     </div>
                                     <!-- /.col -->
                                 </div><br>
